@@ -2,7 +2,10 @@
   <div>
     <div class="menu-item" v-for="(menu_item, m_index) in menu_items" :key="m_index"
          :class="isUrl(menu_item.url) ? ' active' : ''" v-on="menu_item.submenu?{click: (e) => addActiveClass(e)}:{}">
-      <Link class="flex items-center group py-3 menu-link" :href="menu_item.route?route(menu_item.route):'#'" :class="{'have-sub-menu': menu_item.submenu}">
+       <div v-if="menu_item.name === 'Pesan'">
+            <a target="__blank" class="flex items-center group py-3 menu-link" :href="route(menu_item.route)"><icon :name="menu_item.icon" class="w-6 h-6 mr-3 rtl:ml-3 menu__icon" /> {{__(menu_item.name)}}</a>
+       </div>
+      <Link v-else class="flex items-center group py-3 menu-link" :href="menu_item.route?route(menu_item.route):'#'" :class="{'have-sub-menu': menu_item.submenu}">
         <icon :name="menu_item.icon" class="w-6 h-6 mr-3 rtl:ml-3 menu__icon" />
         <div class="menu__name">{{ __(menu_item.name) }}</div>
       </Link>
@@ -62,7 +65,7 @@ export default {
         }
 
         if(enable_option.chat && (user_access.chat.read || user_access.chat.update || user_access.chat.create || user_access.chat.delete)){
-            this.menu_items.push({'name': 'Pesan', 'route': 'chat', 'url': 'chat', 'icon': 'chat'})
+            this.menu_items.push({'name': 'Pesan', 'route': 'pesan', 'url': 'pesan', 'icon': 'chat'})
         }
 
         if(enable_option.faq && (user_access.faq.read || user_access.faq.update || user_access.faq.create || user_access.faq.delete)){
